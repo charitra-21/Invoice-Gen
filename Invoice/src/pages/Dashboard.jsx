@@ -92,12 +92,16 @@ const Dashboard = () => {
     let paidCount = 0;
 
     storedInvoices.forEach((inv) => {
-      const amount = Number(inv.total ?? inv.amount ?? 0);
-      if (inv.status === "Paid") {
-        totalPaid += amount;
-        paidCount++;
-      } else totalUnpaid += amount;
-    });
+  const amount = Number(inv.total ?? inv.amount ?? 0);
+
+  if (inv.status?.toLowerCase() === "paid") {
+    totalPaid += amount;
+    paidCount++;
+  } else {
+    totalUnpaid += amount;
+  }
+});
+
 
     const totalAmount = totalPaid + totalUnpaid;
 
@@ -232,7 +236,7 @@ const Dashboard = () => {
                       </td>
 
                       <td className={dashboardStyles.tableCell}>
-                        {currencyFmt(inv.amount)}
+                        {currencyFmt(inv.total ?? inv.amount)}
                       </td>
 
                       <td className={dashboardStyles.tableCell}>
